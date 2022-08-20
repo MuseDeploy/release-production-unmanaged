@@ -22,6 +22,6 @@ runs:
       env:
         CUMULUSCI_SERVICE_github: '{"username": "${{ github.actor }}", "token": "${{ github.token }}", "email": "cci@github.actions" }'
       run: |
-        cci task run github_release --version ${inputs.version} \
+        cci task run github_release --version ${{ inputs.version }} \
         --tag-prefix release/ --package-type 1GP
       shell: bash
