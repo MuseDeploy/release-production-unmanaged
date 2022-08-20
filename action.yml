@@ -1,0 +1,26 @@
+name: "Upload Release (Unmanaged)"
+description: "Create an unmanaged release in GitHub"
+inputs:
+  cumulusci-version:
+    description: 'version of CumulusCI to install'
+    required: false
+  sfdx-version:
+    description: 'version of SFDX to install'
+    required: false
+  version:
+    description: 'The version number of the release to create'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+    - uses: cumulus-actions/setup-cumulus@v1
+      with:
+        cumulusci-version: '${{ inputs.cumulusci-version }}'
+        sfdx-version: '${{ inputs.sfdx-version }}'
+    - name: Run task github_release
+      env:
+        CUMULUSCI_SERVICE_github: '{"username": "${{ github.actor }}", "token": "${{ github.token }}", "email": "cci@github.actions" }'
+      run: |
+        cci task run github_release --version ${inputs.version} \
+        --tag-prefix release/ --package-type 1GP
+      shell: bash
