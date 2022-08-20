@@ -9,6 +9,7 @@ inputs:
     required: false
   version:
     description: 'The version number of the release to create'
+    required: true
 runs:
   using: "composite"
   steps:
